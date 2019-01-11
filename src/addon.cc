@@ -19,9 +19,7 @@ namespace module
     //VIGEM_API PVIGEM_CLIENT vigem_alloc(void);
     ExternalClient module_alloc(const Napi::CallbackInfo& info) {
         return ExternalClient::New(info.Env(), vigem_alloc(),
-            [] (Napi::Env env, PVIGEM_CLIENT client) {
-                vigem_free(client);
-            }
+            [] (Napi::Env env, PVIGEM_CLIENT client) { vigem_free(client); }
         );
     }
 
@@ -38,18 +36,14 @@ namespace module
     //VIGEM_API PVIGEM_TARGET vigem_target_x360_alloc(void);
     ExternalTarget module_target_x360_alloc(const Napi::CallbackInfo& info) {
         return ExternalTarget::New(info.Env(), vigem_target_x360_alloc(),
-            [] (Napi::Env env, PVIGEM_TARGET target) {
-                vigem_target_free(target);
-            }
+            [] (Napi::Env env, PVIGEM_TARGET target) { vigem_target_free(target); }
         );
     }
 
     // VIGEM_API PVIGEM_TARGET vigem_target_ds4_alloc(void);
     ExternalTarget module_target_ds4_alloc(const Napi::CallbackInfo& info) {
         return ExternalTarget::New(info.Env(), vigem_target_ds4_alloc(),
-            [] (Napi::Env env, PVIGEM_TARGET target) {
-                vigem_target_free(target);
-            }
+            [] (Napi::Env env, PVIGEM_TARGET target) { vigem_target_free(target); }
         );
     }
 

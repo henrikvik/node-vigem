@@ -155,5 +155,4 @@ declare module "node-vigem" {
     // VIGEM_API VIGEM_ERROR vigem_target_x360_get_user_index(PVIGEM_CLIENT vigem, PVIGEM_TARGET target, PULONG index);
     /** Returns the user index of the emulated Xenon device. This value correspondents to the (zero-based) index number representing the player number via LED present on a physical controller and is compatible to the dwUserIndex propery of the XInput* APIs. */
     function target_x360_get_user_index(client: Client, target: Target): number;
-
 }
