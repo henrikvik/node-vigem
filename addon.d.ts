@@ -1,5 +1,4 @@
-
-declare module "vigem" {
+declare module "node-vigem" {
     enum TargetType {
         Xbox360    = 0,
         XboxOne    = 1,
@@ -15,17 +14,17 @@ declare module "vigem" {
     }
 
     enum XUSB_BUTTON {
-        START          = 0x0010,
-        BACK           = 0x0020,
-        THUMB_LEFT     = 0x0040,
-        THUMB_RIGHT    = 0x0080,
-        SHOULDER_LEFT  = 0x0100,
-        SHOULDER_RIGHT = 0x0200,
-        GUIDE          = 0x0400,
-        A              = 0x1000,
-        B              = 0x2000,
-        X              = 0x4000,
-        Y              = 0x8000
+        START          = 1 << 4,
+        BACK           = 1 << 5,
+        THUMB_LEFT     = 1 << 6,
+        THUMB_RIGHT    = 1 << 7,
+        SHOULDER_LEFT  = 1 << 8,
+        SHOULDER_RIGHT = 1 << 9,
+        GUIDE          = 1 << 10,
+        A              = 1 << 12,
+        B              = 1 << 13,
+        X              = 1 << 14,
+        Y              = 1 << 15
     }
 
     interface Axis {
@@ -46,18 +45,18 @@ declare module "vigem" {
     }
 
     enum DS4_BUTTONS {
-        THUMB_RIGHT    = 1 << 15,
-        THUMB_LEFT     = 1 << 14,
-        OPTIONS        = 1 << 13,
-        SHARE          = 1 << 12,
-        TRIGGER_RIGHT  = 1 << 11,
-        TRIGGER_LEFT   = 1 << 10,
-        SHOULDER_RIGHT = 1 << 9,
-        SHOULDER_LEFT  = 1 << 8,
-        TRIANGLE       = 1 << 7,
-        CIRCLE         = 1 << 6,
-        CROSS          = 1 << 5,
         SQUARE         = 1 << 4,
+        CROSS          = 1 << 5,
+        CIRCLE         = 1 << 6,
+        TRIANGLE       = 1 << 7,
+        SHOULDER_LEFT  = 1 << 8,
+        SHOULDER_RIGHT = 1 << 9,
+        TRIGGER_LEFT   = 1 << 10,
+        TRIGGER_RIGHT  = 1 << 11,
+        SHARE          = 1 << 12,
+        OPTIONS        = 1 << 13,
+        THUMB_LEFT     = 1 << 14,
+        THUMB_RIGHT    = 1 << 15,
     }
 
     enum DS4_SPECIAL_BUTTONS {
@@ -72,10 +71,6 @@ declare module "vigem" {
     // VIGEM_API PVIGEM_CLIENT vigem_alloc(void);
     /** Allocates an object representing a driver connection. */
     function alloc(): Client;
-
-    // VIGEM_API void vigem_free(PVIGEM_CLIENT vigem);
-    //** Frees up memory used by the driver connection object. */
-    // function free(client: Client): void;
 
     // VIGEM_API VIGEM_ERROR vigem_connect(PVIGEM_CLIENT vigem);
     /** Initializes the driver object and establishes a connection to the emulation bus driver. Returns an error if no compatible bus device has been found. */
@@ -92,10 +87,6 @@ declare module "vigem" {
     // VIGEM_API PVIGEM_TARGET vigem_target_ds4_alloc(void);
     /** Allocates an object representing a DualShock 4 Controller device. */
     function target_ds4_alloc(): Target;
-
-    //VIGEM_API void vigem_target_free(PVIGEM_TARGET target);
-    //** Frees up memory used by the target device object. This does not automatically remove the associated device from the bus, if present. If the target device doesn't get removed before this call, the device becomes orphaned until the owning process is terminated. */
-    // function target_free(target: Target): void;
 
     // VIGEM_API VIGEM_ERROR vigem_target_add(PVIGEM_CLIENT vigem, PVIGEM_TARGET target);
     /** Adds a provided target device to the bus driver, which is equal to a device plug-in event of a physical hardware device. This function blocks until the target device is in full operational mode. */

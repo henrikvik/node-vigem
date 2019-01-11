@@ -1,8 +1,8 @@
 {
     "targets": [
         {
-            "target_name": "vigem",
-            "sources": [ "src/module.cpp" ],
+            "target_name": "addon",
+            "sources": [ "src/addon.cc" ],
             "include_dirs": [
                 "<!@(node -p \"require('node-addon-api').include\")",
                 "<(module_root_dir)/libs/ViGEmClient-1.16.28.0/include",

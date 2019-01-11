@@ -1,46 +1,17 @@
 #include <napi.h>
-
-#pragma region WinTypeMin
-#define RtlZeroMemory(ptr, size) memset(ptr, 0, size)
-#define FORCEINLINE
-#define VOID void
-#define BOOL bool
-typedef unsigned char BYTE;
-typedef unsigned char UCHAR;
-typedef short SHORT;
-typedef unsigned short USHORT;
-typedef unsigned long ULONG;
-typedef unsigned long *PULONG;
-#pragma endregion
-
+#include "vigem_types.hh"
 #include <ViGEm/Client.h>
 #include <ViGEm/Common.h>
-#include <functional>
-#include "util.hpp"
 #include <limits>
-
-#define EXPORT_FUNC(env, exports, key, function)\
-exports.Set(                                        \
-    Napi::String::New(env, key),                    \
-    Napi::Function::New(env, function))
-
-#define VIGEM_ASSERT(error)                             \
-if (!VIGEM_SUCCESS(error)) {                            \
-    Napi::Error::New(info.Env(), VIGEM_ERROR_STR(error))\
-        .ThrowAsJavaScriptException();                  \
-}
-#define GET_AS_OBJ(obj, key) obj.Get(key).As<Napi::Object>()
-#define GET_AS_INT(obj, key) obj.Get(key).As<Napi::Number>().Int32Value()
-#define GET_AS_FLOAT(obj, key) obj.Get(key).As<Napi::Number>().FloatValue()
-#define GET_AS_FLOAT2(obj, key, subkey) GET_AS_FLOAT(GET_AS_OBJ(obj, key), subkey)
+#include "util.hh"
 
 namespace module
 {
-    const float DPAD_EPSILON = 0.5;
+    const float    DPAD_EPSILON     = 0.5;
     const uint64_t XUSB_TRIGGER_MAX = std::numeric_limits<BYTE>::max();
-    const uint64_t XUSB_THUMB_MAX = std::numeric_limits<SHORT>::max();
-    const uint64_t DS4_TRIGGER_MAX = std::numeric_limits<BYTE>::max();
-    const uint64_t DS4_THUMB_MAX = std::numeric_limits<BYTE>::max();
+    const uint64_t XUSB_THUMB_MAX   = std::numeric_limits<SHORT>::max();
+    const uint64_t DS4_TRIGGER_MAX  = std::numeric_limits<BYTE>::max();
+    const uint64_t DS4_THUMB_MAX    = std::numeric_limits<BYTE>::max();
 
     using ExternalClient = Napi::External<_VIGEM_CLIENT_T>;
     using ExternalTarget = Napi::External<_VIGEM_TARGET_T>;
@@ -54,14 +25,9 @@ namespace module
         );
     }
 
-    //VIGEM_API void vigem_free(PVIGEM_CLIENT vigem);
-    void module_free(const Napi::CallbackInfo& info) {
-        vigem_free(info[0].As<ExternalClient>().Data());
-    }
-
     //VIGEM_API VIGEM_ERROR vigem_connect(PVIGEM_CLIENT vigem);
     void module_connect(const Napi::CallbackInfo& info) {
-        VIGEM_ASSERT(vigem_connect(info[0].As<ExternalClient>().Data()));
+        VIGEM_ASSERT(info.Env(), vigem_connect(info[0].As<ExternalClient>().Data()));
     }
 
     //VIGEM_API void vigem_disconnect(PVIGEM_CLIENT vigem);
@@ -87,14 +53,9 @@ namespace module
         );
     }
 
-    //VIGEM_API void vigem_target_free(PVIGEM_TARGET target);
-    void module_target_free(const Napi::CallbackInfo& info) {
-        vigem_target_free(info[0].As<ExternalTarget>().Data());
-    }
-
     //VIGEM_API VIGEM_ERROR vigem_target_add(PVIGEM_CLIENT vigem, PVIGEM_TARGET target);
     void module_target_add(const Napi::CallbackInfo& info) {
-        VIGEM_ASSERT(vigem_target_add(
+        VIGEM_ASSERT(info.Env(), vigem_target_add(
             info[0].As<ExternalClient>().Data(),
             info[1].As<ExternalTarget>().Data()
         ));
@@ -105,7 +66,7 @@ namespace module
 
     //VIGEM_API VIGEM_ERROR vigem_target_remove(PVIGEM_CLIENT vigem, PVIGEM_TARGET target);
     void module_target_remove(const Napi::CallbackInfo& info) {
-        VIGEM_ASSERT(vigem_target_remove(
+        VIGEM_ASSERT(info.Env(), vigem_target_remove(
             info[0].As<ExternalClient>().Data(),
             info[1].As<ExternalTarget>().Data()
         ));
@@ -183,7 +144,7 @@ namespace module
                 : XUSB_GAMEPAD_DPAD_UP;
         }
 
-        VIGEM_ASSERT(vigem_target_x360_update(
+        VIGEM_ASSERT(info.Env(), vigem_target_x360_update(
             info[0].As<ExternalClient>().Data(),
             info[1].As<ExternalTarget>().Data(),
             report
@@ -208,10 +169,8 @@ namespace module
         report.bThumbRX = (GET_AS_FLOAT2(thumbs, "right", "x") + 1) * 0.5 * DS4_THUMB_MAX;
         report.bThumbRY = (GET_AS_FLOAT2(thumbs, "right", "y") + 1) * 0.5 * DS4_THUMB_MAX;
 
-        auto dpad = GET_AS_OBJ(obj, "dpad");
-        auto dpad_x = GET_AS_FLOAT(dpad, "x");
-        auto dpad_y = GET_AS_FLOAT(dpad, "y");
-
+        auto dpad_x = GET_AS_FLOAT2(obj, "dpad", "x");
+        auto dpad_y = GET_AS_FLOAT2(obj, "dpad", "y");
         if (std::abs(dpad_x) > DPAD_EPSILON) {
             if (std::abs(dpad_y) > DPAD_EPSILON) {
                 if (std::signbit(dpad_y)) {
@@ -236,7 +195,7 @@ namespace module
             report.wButtons |= DS4_BUTTON_DPAD_NONE;
         }
 
-        VIGEM_ASSERT(vigem_target_ds4_update(
+        VIGEM_ASSERT(info.Env(), vigem_target_ds4_update(
             info[0].As<ExternalClient>().Data(),
             info[1].As<ExternalTarget>().Data(),
             report
@@ -267,7 +226,7 @@ namespace module
     //VIGEM_API VIGEM_ERROR vigem_target_x360_get_user_index(PVIGEM_CLIENT vigem, PVIGEM_TARGET target, PULONG index);
     Napi::Number module_target_x360_get_user_index(const Napi::CallbackInfo& info) {
         PULONG index = nullptr;
-        VIGEM_ASSERT(vigem_target_x360_get_user_index(
+        VIGEM_ASSERT(info.Env(), vigem_target_x360_get_user_index(
             info[0].As<ExternalClient>().Data(),
             info[0].As<ExternalTarget>().Data(),
             index
@@ -275,16 +234,13 @@ namespace module
         return Napi::Number::New(info.Env(), *index);
     }
 
-
     Napi::Object Init(Napi::Env env, Napi::Object exports)
     {
         EXPORT_FUNC(env, exports, "alloc", module_alloc);
-        // EXPORT_FUNC(env, exports, "free", module_free);
         EXPORT_FUNC(env, exports, "connect", module_connect);
         EXPORT_FUNC(env, exports, "disconnect", module_disconnect);
         EXPORT_FUNC(env, exports, "target_x360_alloc", module_target_x360_alloc);
         EXPORT_FUNC(env, exports, "target_ds4_alloc", module_target_ds4_alloc);
-        // EXPORT_FUNC(env, exports, "target_free", module_target_free);
         EXPORT_FUNC(env, exports, "target_add", module_target_add);
         EXPORT_FUNC(env, exports, "target_remove", module_target_remove);
         EXPORT_FUNC(env, exports, "target_set_vid", module_target_set_vid);
@@ -300,5 +256,5 @@ namespace module
         return exports;
     }
 
-    NODE_API_MODULE(vigem, Init)
+    NODE_API_MODULE(addon, Init)
 } // namespace module

@@ -1,11 +1,11 @@
 {
-    "name": "vigem",
+    "name": "node-vigem",
     "version": "0.1.0",
     "description": "nodejs bindings for ViGEmClient-1.16.28.0",
     "author": "Henrik Vik",
     "license": "ISC",
-    "main": "vigem.js",
-    "types": "vigem.d.ts",
+    "main": "addon.js",
+    "types": "addon.d.ts",
     "gypfile": true,
     "scripts": {
         "install": "node-gyp rebuild"
