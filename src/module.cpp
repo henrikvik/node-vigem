@@ -19,7 +19,7 @@ typedef unsigned long *PULONG;
 #include "util.hpp"
 #include <limits>
 
-#define export_function(env, exports, key, function)\
+#define EXPORT_FUNC(env, exports, key, function)\
 exports.Set(                                        \
     Napi::String::New(env, key),                    \
     Napi::Function::New(env, function))
@@ -29,7 +29,6 @@ if (!VIGEM_SUCCESS(error)) {                            \
     Napi::Error::New(info.Env(), VIGEM_ERROR_STR(error))\
         .ThrowAsJavaScriptException();                  \
 }
-
 #define GET_AS_OBJ(obj, key) obj.Get(key).As<Napi::Object>()
 #define GET_AS_INT(obj, key) obj.Get(key).As<Napi::Number>().Int32Value()
 #define GET_AS_FLOAT(obj, key) obj.Get(key).As<Napi::Number>().FloatValue()
@@ -279,25 +278,25 @@ namespace module
 
     Napi::Object Init(Napi::Env env, Napi::Object exports)
     {
-        export_function(env, exports, "alloc", module_alloc);
-        // export_function(env, exports, "free", module_free);
-        export_function(env, exports, "connect", module_connect);
-        export_function(env, exports, "disconnect", module_disconnect);
-        export_function(env, exports, "target_x360_alloc", module_target_x360_alloc);
-        export_function(env, exports, "target_ds4_alloc", module_target_ds4_alloc);
-        // export_function(env, exports, "target_free", module_target_free);
-        export_function(env, exports, "target_add", module_target_add);
-        export_function(env, exports, "target_remove", module_target_remove);
-        export_function(env, exports, "target_set_vid", module_target_set_vid);
-        export_function(env, exports, "target_set_pid", module_target_set_pid);
-        export_function(env, exports, "target_get_vid", module_target_get_vid);
-        export_function(env, exports, "target_get_pid", module_target_get_pid);
-        export_function(env, exports, "target_x360_update", module_target_x360_update);
-        export_function(env, exports, "target_ds4_update", module_target_ds4_update);
-        export_function(env, exports, "target_get_index", module_target_get_index);
-        export_function(env, exports, "target_get_type", module_target_get_type);
-        export_function(env, exports, "targe_is_attached", module_targe_is_attached);
-        export_function(env, exports, "target_x360_get_user_index", module_target_x360_get_user_index);
+        EXPORT_FUNC(env, exports, "alloc", module_alloc);
+        // EXPORT_FUNC(env, exports, "free", module_free);
+        EXPORT_FUNC(env, exports, "connect", module_connect);
+        EXPORT_FUNC(env, exports, "disconnect", module_disconnect);
+        EXPORT_FUNC(env, exports, "target_x360_alloc", module_target_x360_alloc);
+        EXPORT_FUNC(env, exports, "target_ds4_alloc", module_target_ds4_alloc);
+        // EXPORT_FUNC(env, exports, "target_free", module_target_free);
+        EXPORT_FUNC(env, exports, "target_add", module_target_add);
+        EXPORT_FUNC(env, exports, "target_remove", module_target_remove);
+        EXPORT_FUNC(env, exports, "target_set_vid", module_target_set_vid);
+        EXPORT_FUNC(env, exports, "target_set_pid", module_target_set_pid);
+        EXPORT_FUNC(env, exports, "target_get_vid", module_target_get_vid);
+        EXPORT_FUNC(env, exports, "target_get_pid", module_target_get_pid);
+        EXPORT_FUNC(env, exports, "target_x360_update", module_target_x360_update);
+        EXPORT_FUNC(env, exports, "target_ds4_update", module_target_ds4_update);
+        EXPORT_FUNC(env, exports, "target_get_index", module_target_get_index);
+        EXPORT_FUNC(env, exports, "target_get_type", module_target_get_type);
+        EXPORT_FUNC(env, exports, "targe_is_attached", module_targe_is_attached);
+        EXPORT_FUNC(env, exports, "target_x360_get_user_index", module_target_x360_get_user_index);
         return exports;
     }
 
