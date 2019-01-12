@@ -12,6 +12,8 @@ Almost a 1:1 mapping of the C++ API for ViGEm Client.
 Differences
 * No manual freeing of memory, managed by v8 Garbage Collector
 * Report has a nested structure
+* Exceptions instead of return codes
+
 
 Check [addon.d.ts](./addon.d.ts) for documentation.
 
@@ -28,15 +30,15 @@ vigem.connect(client);
 vigem.target_add(client, x360);
 
 let report = {
-    // both button A and B are pressed
-    buttons: vigem.XUSB_BUTTON.A | vigem.XUSB_BUTTON.B,
-    triggers: { left: 0, right: 0 },
     // set dpad to South East
     dpad: { x: 1, y: -1 },
     thumbs: {
         left: { x: 0, y: 0 },
         right: { x: 0, y: 0 }
     },
+    // press button A and B
+    buttons: vigem.XUSB_BUTTON.A | vigem.XUSB_BUTTON.B,
+    triggers: { left: 0, right: 0 },
 };
 
 // set state of the connected controller

@@ -82,7 +82,7 @@ declare module "node-vigem" {
     function alloc(): Client;
 
     // VIGEM_API VIGEM_ERROR vigem_connect(PVIGEM_CLIENT vigem);
-    /** Initializes the driver object and establishes a connection to the emulation bus driver. Returns an error if no compatible bus device has been found. */
+    /** Initializes the driver object and establishes a connection to the emulation bus driver. Throws an error if no compatible bus device has been found. */
     function connect(client: Client): void;
 
     // VIGEM_API void vigem_disconnect(PVIGEM_CLIENT vigem);
