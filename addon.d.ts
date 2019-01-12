@@ -5,7 +5,7 @@ declare module "node-vigem" {
         DualShock4,
     }
 
-    /** Flags representing X360 buttons used by the Report, not interchangable with the DS4 buttons. */
+    /** Flags for XUSB_Report.buttons */
     enum XUSB_BUTTON {
         START,
         BACK,
@@ -47,24 +47,24 @@ declare module "node-vigem" {
         private constructor();
     }
 
-    /** Created by the target_*_alloc function and serves as a pointer to the ViGEm Target managed by the addon. */
+    /** Created by the target_*_alloc functions and serves as a pointer to the ViGEm Target managed by the addon. */
     class Target {
         private constructor();
     }
 
-    /** Represents a 2D direction, x and y has a range of -1.0 to 1.0. */
+    /** Represents a 2D direction, "x" and "y" has a range of -1.0 to 1.0. */
     interface Axis {
         x: number;
         y: number;
     }
 
-    /** Generic that represents an object with the values left and right of type T */
+    /** Generic that represents an object with the values "left" and "right" of type T */
     interface LR<T> {
         left:  T;
         right: T;
     }
 
-    /** Report used by target_x360_update. use XUSB_BUTTONS for buttons */
+    /** Represents the state of a X360 Target */
     interface XUSB_Report {
         dpad:     Axis;
         thumbs:   LR<Axis>;
@@ -72,7 +72,7 @@ declare module "node-vigem" {
         triggers: LR<number>;
     }
 
-    /** Report used by target_ds4_update */
+    /** Represents the state of a DS4 Target */
     interface DS4_Report extends XUSB_Report {
         specials: number;
     }
