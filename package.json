@@ -1,6 +1,6 @@
 {
     "name": "node-vigem",
-    "version": "0.1.0",
+    "version": "1.0.0",
     "description": "nodejs bindings for ViGEmClient-1.16.28.0",
     "author": "Henrik Vik",
     "license": "ISC",
