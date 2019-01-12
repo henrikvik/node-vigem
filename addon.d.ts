@@ -1,10 +1,4 @@
 declare module "node-vigem" {
-    enum TargetType {
-        Xbox360,
-        XboxOne,
-        DualShock4,
-    }
-
     /** Flags for XUSB_Report.buttons */
     enum XUSB_BUTTON {
         START,
@@ -40,6 +34,12 @@ declare module "node-vigem" {
     enum DS4_SPECIAL_BUTTONS {
         PS,
         TOUCHPAD
+    }
+    
+    enum TargetType {
+        Xbox360,
+        XboxOne,
+        DualShock4,
     }
 
     /** Created by the alloc function and serves as a pointer to the ViGEm Client managed by the addon. */
