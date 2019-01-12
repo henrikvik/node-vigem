@@ -1,19 +1,14 @@
 # node-vigem
-!! This is a Windows Only Package !!
+Credit goes to Nefarius for his fantatstic work on [ViGEm](https://github.com/ViGEm/ViGEmClient) and [ViGEM Bus Driver](https://docs.vigem.org/#!vigem-bus-driver-installation.md) (Required)
 
-Credit goes to Nefarius for his fantatstic work on [ViGEm](https://github.com/ViGEm/ViGEmClient)
-
-Requires [ViGEM Bus Driver](https://docs.vigem.org/#!vigem-bus-driver-installation.md)
-
-Zero runtime checks so use together with TypeScript.
+**Zero runtime checks so use together with TypeScript.**
 
 Almost a 1:1 mapping of the C++ API for ViGEm Client.
 
-Differences
-* No manual freeing of memory, managed by v8 Garbage Collector
+Differences:
+* No manual freeing of memory
 * Report has a nested structure
 * Exceptions instead of return codes
-
 
 Check [addon.d.ts](./addon.d.ts) for documentation.
 
