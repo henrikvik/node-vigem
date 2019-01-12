@@ -2,6 +2,7 @@
     "targets": [
         {
             "target_name": "addon",
+            "platform"
             "sources": [ "src/addon.cc" ],
             "include_dirs": [
                 "<!@(node -p \"require('node-addon-api').include\")",
@@ -12,7 +13,7 @@
             ],
             "libraries": [
                 "setupapi.lib",
-                "ViGEmClient-x64-Release.lib",
+                "ViGEmClient-$(PlatformShortName).lib",
             ],
             "msbuild_settings": {
                 "ClCompile": {

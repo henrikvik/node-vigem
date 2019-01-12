@@ -6,6 +6,9 @@
     "license": "ISC",
     "main": "addon.js",
     "types": "addon.d.ts",
+    "os": [
+        "win32"
+    ],
     "gypfile": true,
     "scripts": {
         "install": "node-gyp rebuild"
