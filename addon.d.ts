@@ -1,42 +1,70 @@
 declare module "node-vigem" {
     enum TargetType {
-        Xbox360    = 0,
-        XboxOne    = 1,
-        DualShock4 = 2,
+        Xbox360,
+        XboxOne,
+        DualShock4,
     }
 
+    /** Flags representing X360 buttons used by the Report, not interchangable with the DS4 buttons. */
+    enum XUSB_BUTTON {
+        START,
+        BACK,
+        THUMB_LEFT,
+        THUMB_RIGHT,
+        SHOULDER_LEFT,
+        SHOULDER_RIGHT,
+        GUIDE,
+        A,
+        B,
+        X,
+        Y
+    }
+
+    /** Flags for DS4_Report.buttons */
+    enum DS4_BUTTONS {
+        SQUARE,
+        CROSS,
+        CIRCLE,
+        TRIANGLE,
+        SHOULDER_LEFT,
+        SHOULDER_RIGHT,
+        TRIGGER_LEFT,
+        TRIGGER_RIGHT,
+        SHARE,
+        OPTIONS,
+        THUMB_LEFT,
+        THUMB_RIGHT,
+    }
+
+    /** Flags for DS4_Report.specials */
+    enum DS4_SPECIAL_BUTTONS {
+        PS,
+        TOUCHPAD
+    }
+
+    /** Created by the alloc function and serves as a pointer to the ViGEm Client managed by the addon. */
     class Client {
         private constructor();
     }
 
+    /** Created by the target_*_alloc function and serves as a pointer to the ViGEm Target managed by the addon. */
     class Target {
         private constructor();
     }
 
-    enum XUSB_BUTTON {
-        START          = 1 << 4,
-        BACK           = 1 << 5,
-        THUMB_LEFT     = 1 << 6,
-        THUMB_RIGHT    = 1 << 7,
-        SHOULDER_LEFT  = 1 << 8,
-        SHOULDER_RIGHT = 1 << 9,
-        GUIDE          = 1 << 10,
-        A              = 1 << 12,
-        B              = 1 << 13,
-        X              = 1 << 14,
-        Y              = 1 << 15
-    }
-
+    /** Represents a 2D direction, x and y has a range of -1.0 to 1.0. */
     interface Axis {
         x: number;
         y: number;
     }
 
+    /** Generic that represents an object with the values left and right of type T */
     interface LR<T> {
         left:  T;
         right: T;
     }
 
+    /** Report used by target_x360_update. use XUSB_BUTTONS for buttons */
     interface XUSB_Report {
         dpad:     Axis;
         thumbs:   LR<Axis>;
@@ -44,26 +72,7 @@ declare module "node-vigem" {
         triggers: LR<number>;
     }
 
-    enum DS4_BUTTONS {
-        SQUARE         = 1 << 4,
-        CROSS          = 1 << 5,
-        CIRCLE         = 1 << 6,
-        TRIANGLE       = 1 << 7,
-        SHOULDER_LEFT  = 1 << 8,
-        SHOULDER_RIGHT = 1 << 9,
-        TRIGGER_LEFT   = 1 << 10,
-        TRIGGER_RIGHT  = 1 << 11,
-        SHARE          = 1 << 12,
-        OPTIONS        = 1 << 13,
-        THUMB_LEFT     = 1 << 14,
-        THUMB_RIGHT    = 1 << 15,
-    }
-
-    enum DS4_SPECIAL_BUTTONS {
-        PS       = 1 << 0,
-        TOUCHPAD = 1 << 1
-    }
-
+    /** Report used by target_ds4_update */
     interface DS4_Report extends XUSB_Report {
         specials: number;
     }
