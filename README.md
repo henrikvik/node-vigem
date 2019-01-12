@@ -1,7 +1,7 @@
 # node-vigem
 Credit goes to Nefarius for his fantatstic work on [ViGEm](https://github.com/ViGEm/ViGEmClient) and [ViGEM Bus Driver](https://docs.vigem.org/#!vigem-bus-driver-installation.md) (Required)
 
-**Zero runtime checks so use together with TypeScript.**
+**Zero runtime checks, use together with TypeScript.**
 
 Almost a 1:1 mapping of the C++ API for ViGEm Client.
 
