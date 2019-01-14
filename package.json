@@ -1,7 +1,7 @@
 {
     "name": "node-vigem",
-    "version": "1.0.3",
-    "description": "Virtual Gamepad Emulation Framework",
+    "version": "1.0.4",
+    "description": "Nodejs bindings for the Virtual Gamepad Emulation Framework: ViGEm",
     "author": "Henrik Vik",
     "repository": "https://github.com/henrikvik/node-vigem",
     "license": "MIT",
