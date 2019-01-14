@@ -1,6 +1,6 @@
 {
     "name": "node-vigem",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "nodejs bindings for ViGEm Client",
     "author": "Henrik Vik",
     "repository": "https://github.com/henrikvik/node-vigem",
