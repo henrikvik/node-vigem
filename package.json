@@ -3,7 +3,9 @@
     "version": "1.0.0",
     "description": "nodejs bindings for ViGEm Client",
     "author": "Henrik Vik",
-    "license": "ISC",
+    "repository": "https://github.com/henrikvik/node-vigem",
+    "license": "MIT",
+    "keywords": ["Controller Emulation", "Virtual Gamepad", "Nodejs Bindings", "Windows Only"],
     "main": "addon.js",
     "types": "addon.d.ts",
     "os": [
