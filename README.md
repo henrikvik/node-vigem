@@ -1,5 +1,5 @@
 # node-vigem
-Credit goes to Nefarius for his fantatstic work on [ViGEm](https://github.com/ViGEm/ViGEmClient) and [ViGEM Bus Driver](https://docs.vigem.org/#!vigem-bus-driver-installation.md) (Required)
+Credit goes to Nefarius for his fantatstic work on [ViGEm](https://github.com/ViGEm/ViGEmClient) and [ViGEm Bus Driver](https://docs.vigem.org/#!vigem-bus-driver-installation.md) (Required)
 
 **Zero runtime checks, use together with TypeScript.**
 
